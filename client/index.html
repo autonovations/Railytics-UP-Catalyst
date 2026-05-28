@@ -25,10 +25,10 @@ a{color:#FFC107;text-decoration:none}
 button{cursor:pointer;font-family:inherit;border:none;outline:none}
 
 /* ═══════════════ HEADER ═══════════════ */
-.header{position:fixed;top:0;left:0;right:0;z-index:1200;background:#FFAD01;display:flex;align-items:center;padding:8px 20px;min-height:100px}
+.header{position:fixed;top:0;left:0;right:0;z-index:1200;background:#FFAD01;display:flex;align-items:center;padding:8px 20px;min-height:100px;box-shadow:0 4px 20px rgba(0,0,0,0.25)}
 .header .hamburger{background:none;color:#000;font-size:2rem;padding:12px;border-radius:8px;display:flex;align-items:center;justify-content:center;transition:.2s;flex:0 0 80px}
 .header .hamburger:hover{background:rgba(0,0,0,.1);transform:scale(1.05)}
-.header .logo{height:80px;margin-left:12px;object-fit:contain}
+.header .logo{height:80px;margin:0 12px;object-fit:contain;max-width:35%}
 .header-spacer{height:100px}
 
 /* ═══════════════ DRAWER ═══════════════ */
@@ -264,6 +264,41 @@ table tr:hover{background:rgba(255,193,7,.05)}
 .timeline-title{font-size:.9rem;font-weight:600;color:#fff;margin-bottom:4px}
 .timeline-desc{font-size:.8rem;color:#aaa}
 
+/* ═══════════════ RESPONSIVE CLASSES & STYLES ═══════════════ */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+.tab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.widgets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.calendar-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  align-items: start;
+}
+
 /* ═══════════════ RESPONSIVE ═══════════════ */
 @media(max-width:1200px){
   .stat-grid{grid-template-columns:1fr 1fr 1fr}
@@ -271,8 +306,16 @@ table tr:hover{background:rgba(255,193,7,.05)}
   .det-table-header,.det-table-row{grid-template-columns:1fr 1fr 1fr 1fr 1fr;font-size:.8rem}
   .heatmap-grid{grid-template-columns:repeat(12,1fr)}
   .heatmap-labels{grid-template-columns:repeat(12,1fr)}
+  .widgets-grid {grid-template-columns: 1fr 1fr}
+}
+@media(max-width:992px){
+  .calendar-layout {grid-template-columns: 1fr}
 }
 @media(max-width:768px){
+  .header{min-height:70px;padding:8px 16px}
+  .header .hamburger{flex:0 0 60px;font-size:1.6rem;padding:8px}
+  .header .logo{height:50px;margin:0 8px;max-width:30%}
+  .header-spacer{height:70px}
   .stream-grid{grid-template-columns:1fr}
   .stat-grid{grid-template-columns:1fr 1fr}
   .stat-card.wide{grid-column:span 2}
@@ -280,6 +323,17 @@ table tr:hover{background:rgba(255,193,7,.05)}
   .det-table-header,.det-table-row{grid-template-columns:1fr 1fr 1fr;font-size:.75rem}
   .heatmap-grid{grid-template-columns:repeat(6,1fr)}
   .heatmap-labels{grid-template-columns:repeat(6,1fr)}
+  .widgets-grid {grid-template-columns: 1fr}
+  .charts-grid {grid-template-columns: 1fr}
+  .container{padding:12px}
+}
+@media(max-width:480px){
+  .stat-grid{grid-template-columns:1fr}
+  .stat-card.wide{grid-column:span 1}
+  .stat-card{height:auto;min-height:140px}
+  .frame-grid{grid-template-columns:1fr}
+  .det-table-header{display:none}
+  .det-table-row{grid-template-columns:1fr;gap:8px;text-align:left;border-left-width:4px;padding:12px}
 }
 </style>
 </head>
@@ -290,6 +344,7 @@ table tr:hover{background:rgba(255,193,7,.05)}
   <button class="hamburger" onclick="toggleDrawer()"><span class="material-icons" style="font-size:2.5rem">menu</span></button>
   <img src="./up_logo.jpg" alt="UP" class="logo"/>
   <div style="flex:1"></div>
+  <img src="./AN-logo.png" alt="AN" class="logo"/>
 </header>
 <div class="header-spacer"></div>
 
@@ -308,7 +363,7 @@ table tr:hover{background:rgba(255,193,7,.05)}
 
 <!-- ════ TAB 0: STREAM SELECTION ════ -->
 <div class="tab-panel active" id="tab0">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+  <div class="tab-header">
     <h2 style="font-weight:600"></h2>
     <div style="display:flex;gap:8px">
       <button class="btn btn-primary btn-sm" onclick="startAllAnalysis()"><span class="material-icons" style="font-size:1rem">play_arrow</span> Start All</button>
@@ -338,7 +393,7 @@ table tr:hover{background:rgba(255,193,7,.05)}
       <div class="stat-grid" id="statCards"></div>
       
       <!-- NEW: Real-Time Widgets Grid -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px">
+      <div class="widgets-grid">
         <!-- Processing Speed Gauge -->
         <div class="card">
           <div class="card-content">
@@ -388,7 +443,7 @@ table tr:hover{background:rgba(255,193,7,.05)}
       </div>
 
       <!-- NEW: Comparative Bar Chart & Pie Chart Side by Side -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
+      <div class="charts-grid">
         <!-- Bar Chart -->
         <div class="card">
           <div class="card-content">
@@ -448,7 +503,7 @@ table tr:hover{background:rgba(255,193,7,.05)}
   </div>
   <!-- Inner Tab 2: Historical -->
   <div class="inner-tab" id="innerTab2">
-    <div style="display:grid;grid-template-columns:1fr 2fr;gap:24px;align-items:start">
+    <div class="calendar-layout">
       <div>
         <h3 style="color:#FFC107;margin-bottom:12px;font-weight:600">📅 Event Calendar</h3>
         <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center">
@@ -1310,11 +1365,11 @@ function renderCalendarEvents() {
   const pageEvents = dayEvents.slice(start, start + calEventsPerPage);
   const fmtDur = s => { if (s == null) return 'ongoing'; const m = Math.floor(s / 60), sec = s % 60; return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0'); };
 
-  el.innerHTML = '<table><tr style="background:#1f1f1f"><th style="background:#1f1f1f;color:#FFC107;font-weight:700">⏱ Timestamp</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">🚩 Reporting Marks</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">📍 Location</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">🚂 Units</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">⏳ Duration</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700;text-align:right">Action</th></tr>' + pageEvents.map(e => {
+  el.innerHTML = '<div class="table-responsive"><table><tr style="background:#1f1f1f"><th style="background:#1f1f1f;color:#FFC107;font-weight:700">⏱ Timestamp</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">🚩 Reporting Marks</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">📍 Location</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">🚂 Units</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">⏳ Duration</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700;text-align:right">Action</th></tr>' + pageEvents.map(e => {
     const t = new Date(e.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     const marks = e.reporting_marks || [];
     return '<tr style="transition:.2s"><td style="color:#fff;font-weight:500">' + t + '</td><td>' + (marks[0] ? '<span style="color:#FFC107;font-weight:600">' + marks[0] + '</span>' + (marks.length > 1 ? ' <span class="chip primary">+' + (marks.length - 1) + '</span>' : '') : '—') + '</td><td style="color:#64B5F6;font-weight:600">' + (e.stream_name || '—') + '</td><td><span class="chip primary">' + (e.units_count || 0) + '</span></td><td><span class="chip success">' + fmtDur(e.duration_seconds) + '</span></td><td style="text-align:right"><button class="btn btn-warning btn-sm" onclick=""><span class="material-icons" style="font-size:.9rem">search</span> View Details</button></td></tr>';
-  }).join('') + '</table>';
+  }).join('') + '</table></div>';
   // Pagination
   if (totalPages > 1) {
     el.innerHTML += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;margin-top:8px;color:#aaa;font-size:.85rem"><span>' + (start + 1) + '–' + Math.min(start + calEventsPerPage, dayEvents.length) + ' of ' + dayEvents.length + '</span><div style="display:flex;gap:4px"><select class="select" style="font-size:.8rem;padding:4px 8px" onchange="calEventsPerPage=parseInt(this.value);calEventsPage=0;renderCalendarEvents()">' + [5, 10, 25, 50].map(n => '<option value="' + n + '"' + (n === calEventsPerPage ? ' selected' : '') + '>' + n + '</option>').join('') + '</select><button class="btn btn-outline btn-sm" onclick="calEventsPage=Math.max(0,calEventsPage-1);renderCalendarEvents()" ' + (calEventsPage === 0 ? 'disabled' : '') + '>&lt;</button><button class="btn btn-outline btn-sm" onclick="calEventsPage=Math.min(' + (totalPages - 1) + ',calEventsPage+1);renderCalendarEvents()" ' + (calEventsPage >= totalPages - 1 ? 'disabled' : '') + '>&gt;</button></div></div>';
@@ -1333,7 +1388,7 @@ function loadDashboard() {
   }
   const fmt = ts => { try { return new Date(ts).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }); } catch (_) { return '—'; } };
   const fmtDur = s => { if (s == null) return '—'; const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), sec = Math.floor(s % 60); return h > 0 ? h + 'h ' + m + 'm ' + sec + 's' : m > 0 ? m + 'm ' + sec + 's' : sec + 's'; };
-  el.innerHTML = '<table><tr><th><span style="display:flex;align-items:center;gap:4px"><span class="material-icons" style="font-size:1rem">schedule</span> Start</span></th><th><span style="display:flex;align-items:center;gap:4px"><span class="material-icons" style="font-size:1rem">schedule</span> End</span></th><th style="text-align:center"><span style="display:flex;align-items:center;gap:4px;justify-content:center"><span class="material-icons" style="font-size:1rem">access_time</span> Duration</span></th><th style="text-align:center"><span style="display:flex;align-items:center;gap:4px;justify-content:center"><span class="material-icons" style="font-size:1rem">train</span> Frames</span></th><th style="text-align:center">Units</th><th><span style="display:flex;align-items:center;gap:4px"><span class="material-icons" style="font-size:1rem">badge</span> Reporting Marks</span></th><th style="text-align:center"><span style="display:flex;align-items:center;gap:4px;justify-content:center"><span class="material-icons" style="font-size:1rem">image</span> Last Detection</span></th><th style="text-align:center">Video</th><th style="text-align:center">Action</th></tr>' + events.slice(0, 50).map(e => '<tr style="cursor:pointer;transition:.2s"><td>' + fmt(e.start_time) + '</td><td>' + (e.end_time ? fmt(e.end_time) : '— (active)') + '</td><td style="text-align:center;font-weight:700">' + fmtDur(e.duration_seconds) + '</td><td style="text-align:center">' + (e.frames_count || 0) + '</td><td style="text-align:center">' + (e.units_count || 0) + '</td><td>' + (e.reporting_marks || []).slice(0, 6).map(r => '<span class="chip primary" style="margin:1px">' + r + '</span>').join('') + ((e.reporting_marks || []).length > 6 ? '<span class="chip primary">+' + (e.reporting_marks.length - 6) + '</span>' : '') + '</td><td style="text-align:center"><div style="width:80px;height:50px;background:#1a1a1a;border-radius:4px;border:1px solid rgba(255,193,7,.2);display:flex;align-items:center;justify-content:center;margin:0 auto"><span class="material-icons" style="font-size:1.2rem;color:#555">image</span></div></td><td style="text-align:center"><button class="btn btn-outline btn-sm" title="View event video"><span class="material-icons" style="font-size:1rem">play_arrow</span></button></td><td style="text-align:center"><button class="btn btn-primary btn-sm"><span class="material-icons" style="font-size:.9rem">search</span> View Details</button></td></tr>').join('') + '</table>';
+  el.innerHTML = '<div class="table-responsive"><table><tr><th><span style="display:flex;align-items:center;gap:4px"><span class="material-icons" style="font-size:1rem">schedule</span> Start</span></th><th><span style="display:flex;align-items:center;gap:4px"><span class="material-icons" style="font-size:1rem">schedule</span> End</span></th><th style="text-align:center"><span style="display:flex;align-items:center;gap:4px;justify-content:center"><span class="material-icons" style="font-size:1rem">access_time</span> Duration</span></th><th style="text-align:center"><span style="display:flex;align-items:center;gap:4px;justify-content:center"><span class="material-icons" style="font-size:1rem">train</span> Frames</span></th><th style="text-align:center">Units</th><th><span style="display:flex;align-items:center;gap:4px"><span class="material-icons" style="font-size:1rem">badge</span> Reporting Marks</span></th><th style="text-align:center"><span style="display:flex;align-items:center;gap:4px;justify-content:center"><span class="material-icons" style="font-size:1rem">image</span> Last Detection</span></th><th style="text-align:center">Video</th><th style="text-align:center">Action</th></tr>' + events.slice(0, 50).map(e => '<tr style="cursor:pointer;transition:.2s"><td>' + fmt(e.start_time) + '</td><td>' + (e.end_time ? fmt(e.end_time) : '— (active)') + '</td><td style="text-align:center;font-weight:700">' + fmtDur(e.duration_seconds) + '</td><td style="text-align:center">' + (e.frames_count || 0) + '</td><td style="text-align:center">' + (e.units_count || 0) + '</td><td>' + (e.reporting_marks || []).slice(0, 6).map(r => '<span class="chip primary" style="margin:1px">' + r + '</span>').join('') + ((e.reporting_marks || []).length > 6 ? '<span class="chip primary">+' + (e.reporting_marks.length - 6) + '</span>' : '') + '</td><td style="text-align:center"><div style="width:80px;height:50px;background:#1a1a1a;border-radius:4px;border:1px solid rgba(255,193,7,.2);display:flex;align-items:center;justify-content:center;margin:0 auto"><span class="material-icons" style="font-size:1.2rem;color:#555">image</span></div></td><td style="text-align:center"><button class="btn btn-outline btn-sm" title="View event video"><span class="material-icons" style="font-size:1rem">play_arrow</span></button></td><td style="text-align:center"><button class="btn btn-primary btn-sm"><span class="material-icons" style="font-size:.9rem">search</span> View Details</button></td></tr>').join('') + '</table></div>';
 }
 
 /* ═══════════════ FRAME GALLERY ═══════════════ */
