@@ -133,7 +133,7 @@ table tr:hover{background:rgba(255,193,7,.05)}
 .chart-container:hover{box-shadow:0 0 20px rgba(255,193,7,.3)}
 
 /* ═══════════════ CALENDAR ═══════════════ */
-.calendar{background:#1a1a1a;border:1px solid rgba(255,173,1,.2);border-radius:12px;padding:24px;max-width:520px;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.calendar{background:#1a1a1a;border:1px solid rgba(255,173,1,.2);border-radius:12px;padding:24px;width:100%;max-width:520px;box-shadow:0 8px 32px rgba(0,0,0,.3)}
 .calendar .cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .calendar .cal-header h3{font-size:1.5rem;font-weight:700}
 .calendar .cal-nav{background:rgba(255,193,7,.1);color:#FFC107;border:none;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:.2s}
@@ -141,16 +141,16 @@ table tr:hover{background:rgba(255,193,7,.05)}
 .calendar .weekdays{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:8px}
 .calendar .weekdays span{color:rgba(255,255,255,.6);font-size:.875rem;padding:12px 0;font-weight:600;letter-spacing:.5px}
 .calendar .days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.calendar .day-cell{display:flex;justify-content:center;align-items:center;height:56px;padding:4px}
-.calendar .day-btn{background:none;border:none;color:rgba(255,255,255,.8);min-width:44px;height:44px;border-radius:8px;font-size:.95rem;font-weight:500;transition:.2s}
+.calendar .day-cell{display:flex;justify-content:center;align-items:center;aspect-ratio:1;padding:2px}
+.calendar .day-btn{background:none;border:none;color:rgba(255,255,255,.8);width:100%;height:100%;max-width:44px;max-height:44px;border-radius:8px;font-size:.95rem;font-weight:500;transition:.2s;display:flex;align-items:center;justify-content:center}
 .calendar .day-btn:hover{background:rgba(255,255,255,.1);color:#FFC107;transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.3)}
 .calendar .day-btn.today{background:#FFC107;color:#000;font-weight:700}
 .calendar .day-btn.selected{background:#4CAF50;color:#000;font-weight:700}
 .calendar .day-btn.has-events{background:rgba(100,181,246,.8);color:#000;font-weight:600;border:1px solid rgba(100,181,246,.5)}
 .calendar .day-btn.empty{visibility:hidden}
-.calendar .legend{display:flex;justify-content:center;gap:24px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
+.calendar .legend{display:flex;justify-content:center;gap:16px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);flex-wrap:wrap}
 .calendar .legend-item{display:flex;align-items:center;gap:8px}
-.calendar .legend-color{width:16px;height:16px;border-radius:4px}
+.calendar .legend-color{width:16px;height:16px;border-radius:4px;flex-shrink:0}
 .calendar .legend-text{color:rgba(255,255,255,.8);font-size:.85rem;font-weight:500}
 
 /* ═══════════════ SESSION CARDS ═══════════════ */
@@ -334,22 +334,71 @@ table tr:hover{background:rgba(255,193,7,.05)}
   .frame-grid{grid-template-columns:1fr}
   .det-table-header{display:none}
   .det-table-row{grid-template-columns:1fr;gap:8px;text-align:left;border-left-width:4px;padding:12px}
+  .calendar {
+    padding: 8px;
+  }
+  .calendar .cal-header {
+    margin-bottom: 12px;
+  }
+  .calendar .cal-header h3 {
+    font-size: 1.1rem;
+  }
+  .calendar .cal-nav {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+  }
+  .calendar .weekdays span {
+    font-size: 0.7rem;
+    padding: 4px 0;
+  }
+  .calendar .days {
+    gap: 2px;
+  }
+  .calendar .day-btn {
+    font-size: 0.8rem;
+    border-radius: 6px;
+  }
+  .calendar .legend {
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 10px;
+  }
+  .calendar .legend-text {
+    font-size: 0.7rem;
+  }
 }
 
-/* Responsive Table-to-Card styling for Multi-Stream */
+/* Responsive Table-to-Card styling for Multi-Stream and Calendar Events */
+@media(max-width:992px){
+  .calendar-layout {grid-template-columns: 1fr}
+  .calendar {
+    margin: 0 auto;
+  }
+}
+
 @media(max-width:768px){
   .responsive-multistream-table, 
   .responsive-multistream-table thead, 
   .responsive-multistream-table tbody, 
   .responsive-multistream-table th, 
   .responsive-multistream-table td, 
-  .responsive-multistream-table tr { 
+  .responsive-multistream-table tr,
+  .responsive-calendar-table, 
+  .responsive-calendar-table thead, 
+  .responsive-calendar-table tbody, 
+  .responsive-calendar-table th, 
+  .responsive-calendar-table td, 
+  .responsive-calendar-table tr { 
     display: block; 
   }
-  .responsive-multistream-table thead { 
+  .responsive-multistream-table thead,
+  .responsive-calendar-table thead { 
     display: none;
   }
-  .responsive-multistream-table tr { 
+  .responsive-multistream-table tr,
+  .responsive-calendar-table tr { 
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 193, 7, 0.15);
     border-radius: 12px;
@@ -358,12 +407,14 @@ table tr:hover{background:rgba(255,193,7,.05)}
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
   }
-  .responsive-multistream-table tr:hover {
+  .responsive-multistream-table tr:hover,
+  .responsive-calendar-table tr:hover {
     background: rgba(255, 193, 7, 0.03);
     border-color: rgba(255, 193, 7, 0.3);
     box-shadow: 0 4px 20px rgba(255, 176, 0, 0.15);
   }
-  .responsive-multistream-table td { 
+  .responsive-multistream-table td,
+  .responsive-calendar-table td { 
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     padding: 10px 0;
     position: relative;
@@ -374,14 +425,17 @@ table tr:hover{background:rgba(255,193,7,.05)}
     align-items: center;
     justify-content: flex-end;
   }
-  .responsive-multistream-table td:last-child {
+  .responsive-multistream-table td:last-child,
+  .responsive-calendar-table td:last-child {
     border-bottom: none;
     padding-bottom: 0;
   }
-  .responsive-multistream-table td:first-child {
+  .responsive-multistream-table td:first-child,
+  .responsive-calendar-table td:first-child {
     padding-top: 0;
   }
-  .responsive-multistream-table td::before { 
+  .responsive-multistream-table td::before,
+  .responsive-calendar-table td::before { 
     content: attr(data-label);
     position: absolute;
     left: 0;
@@ -1424,11 +1478,11 @@ function renderCalendarEvents() {
   const pageEvents = dayEvents.slice(start, start + calEventsPerPage);
   const fmtDur = s => { if (s == null) return 'ongoing'; const m = Math.floor(s / 60), sec = s % 60; return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0'); };
 
-  el.innerHTML = '<div class="table-responsive"><table><tr style="background:#1f1f1f"><th style="background:#1f1f1f;color:#FFC107;font-weight:700">⏱ Timestamp</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">🚩 Reporting Marks</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">📍 Location</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">🚂 Units</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">⏳ Duration</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700;text-align:right">Action</th></tr>' + pageEvents.map(e => {
+  el.innerHTML = '<div class="table-responsive"><table class="responsive-calendar-table"><thead><tr style="background:#1f1f1f"><th style="background:#1f1f1f;color:#FFC107;font-weight:700">⏱ Timestamp</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">🚩 Reporting Marks</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">📍 Location</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">🚂 Units</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700">⏳ Duration</th><th style="background:#1f1f1f;color:#FFC107;font-weight:700;text-align:right">Action</th></tr></thead><tbody>' + pageEvents.map(e => {
     const t = new Date(e.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     const marks = e.reporting_marks || [];
-    return '<tr style="transition:.2s"><td style="color:#fff;font-weight:500">' + t + '</td><td>' + (marks[0] ? '<span style="color:#FFC107;font-weight:600">' + marks[0] + '</span>' + (marks.length > 1 ? ' <span class="chip primary">+' + (marks.length - 1) + '</span>' : '') : '—') + '</td><td style="color:#64B5F6;font-weight:600">' + (e.stream_name || '—') + '</td><td><span class="chip primary">' + (e.units_count || 0) + '</span></td><td><span class="chip success">' + fmtDur(e.duration_seconds) + '</span></td><td style="text-align:right"><button class="btn btn-warning btn-sm" onclick=""><span class="material-icons" style="font-size:.9rem">search</span> View Details</button></td></tr>';
-  }).join('') + '</table></div>';
+    return '<tr style="transition:.2s"><td data-label="Timestamp" style="color:#fff;font-weight:500">' + t + '</td><td data-label="Reporting Marks">' + (marks[0] ? '<span style="color:#FFC107;font-weight:600">' + marks[0] + '</span>' + (marks.length > 1 ? ' <span class="chip primary">+' + (marks.length - 1) + '</span>' : '') : '—') + '</td><td data-label="Location" style="color:#64B5F6;font-weight:600">' + (e.stream_name || '—') + '</td><td data-label="Units"><span class="chip primary">' + (e.units_count || 0) + '</span></td><td data-label="Duration"><span class="chip success">' + fmtDur(e.duration_seconds) + '</span></td><td data-label="Action" style="text-align:right"><button class="btn btn-warning btn-sm" onclick=""><span class="material-icons" style="font-size:.9rem">search</span> View Details</button></td></tr>';
+  }).join('') + '</tbody></table></div>';
   // Pagination
   if (totalPages > 1) {
     el.innerHTML += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;margin-top:8px;color:#aaa;font-size:.85rem"><span>' + (start + 1) + '–' + Math.min(start + calEventsPerPage, dayEvents.length) + ' of ' + dayEvents.length + '</span><div style="display:flex;gap:4px"><select class="select" style="font-size:.8rem;padding:4px 8px" onchange="calEventsPerPage=parseInt(this.value);calEventsPage=0;renderCalendarEvents()">' + [5, 10, 25, 50].map(n => '<option value="' + n + '"' + (n === calEventsPerPage ? ' selected' : '') + '>' + n + '</option>').join('') + '</select><button class="btn btn-outline btn-sm" onclick="calEventsPage=Math.max(0,calEventsPage-1);renderCalendarEvents()" ' + (calEventsPage === 0 ? 'disabled' : '') + '>&lt;</button><button class="btn btn-outline btn-sm" onclick="calEventsPage=Math.min(' + (totalPages - 1) + ',calEventsPage+1);renderCalendarEvents()" ' + (calEventsPage >= totalPages - 1 ? 'disabled' : '') + '>&gt;</button></div></div>';
